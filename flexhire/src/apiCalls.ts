@@ -1,27 +1,4 @@
-async function fetchFlexhireData() {
-  
-  const query = `{
-    currentUser {
-      name,
-      avatarUrl,
-      userSkills {
-        experience,
-        skill {
-           name
-        }
-      },
-      answers {
-        question {
-          title,
-          videoAnswer {
-            video {
-              url
-            }
-          }
-        }
-      }
-    }
-  }`
+async function fetchFlexhireData(queryType: string) {
 
     const response = await fetch('https://api.flexhire.com/api/v2', {
       method: 'POST',
@@ -30,7 +7,7 @@ async function fetchFlexhireData() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        query: query,
+        query: queryType,
       }),
     });
   
