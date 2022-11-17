@@ -8,13 +8,16 @@ interface ICurrentUser {
   currentUser?: {
     name: string,
     avatarUrl: string,
-    userSkills: {
+    userSkills: [
+      {
       experience: string,
       skill: {
         name: string
       }
-    },
-    answers: {
+    }
+    ],
+    answers: [
+      {
       question: {
         title: string,
         videoAnswer: {
@@ -24,6 +27,7 @@ interface ICurrentUser {
         }
       }
     }
+    ]
   }}
 }
 
@@ -49,6 +53,27 @@ function App() {
       <p>
         {profileInformation.data.currentUser.name}
       </p>
+      <div>
+      <h2>Skills</h2>
+      {profileInformation.data.currentUser.userSkills.map((userSkill) => {
+        return (
+          <>
+          <div>{userSkill.skill.name}</div>
+        <div>Level: {userSkill.experience}/5</div>
+        </>
+        )
+      })}
+      </div>
+      <div>
+      {profileInformation.data.currentUser.answers.map((answer) => {
+        return (
+          <>
+          <div>{answer.question.title}</div>
+        <video controls><source src={answer.question.videoAnswer.video.url} type="video/mp4" /></video>
+        </>
+        )
+      })}
+      </div>
     </header>
   </div> :
   <div>loading</div>
