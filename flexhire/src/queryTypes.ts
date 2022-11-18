@@ -17,11 +17,14 @@ export const currentUserQuery = `{
             }
           }
         }
-      }
+      },
+      email
     }
   }`;
 
-export const jobQuery = `{contract(rawId: 16842) {
+export const jobQuery = (email: string) => {
+  return (
+  `{contract(freelancerEmail: ${email}) {
   client {
     name
   }
@@ -37,4 +40,4 @@ export const jobQuery = `{contract(rawId: 16842) {
     title
   }
 }
-}`;
+}`)}

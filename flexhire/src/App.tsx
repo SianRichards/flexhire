@@ -28,6 +28,7 @@ interface ICurrentUser {
           };
         }
       ];
+      email: string;
     };
   };
 }
@@ -61,16 +62,14 @@ function App() {
 
   useEffect(() => {
     fetchFlexhireData(currentUserQuery).then((currentUserInfo) => {
-      setProfileInformation(currentUserInfo);
+      return setProfileInformation(currentUserInfo);
     });
-    fetchFlexhireData(jobQuery).then((jobInfo) => {
-      setJobInformation(jobInfo);
+    fetchFlexhireData(
+      jobQuery(JSON.stringify(profileInformation.data?.currentUser?.email))
+    ).then((jobInfo) => {
+      return setJobInformation(jobInfo);
     });
   }, []);
-
-  // useEffect(() => {
-  //   console.log(jobInformation);
-  // }, [jobInformation]);
 
   return profileInformation.data?.currentUser ? (
     <div className="App">
