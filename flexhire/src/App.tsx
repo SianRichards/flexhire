@@ -35,21 +35,25 @@ interface ICurrentUser {
 
 interface IJobs {
   data: {
-    contract: {
-      client: {
-        name: string;
-      };
-      contractRequests: {
-        project: {
-          title: string;
-        };
-      };
-      firm: {
-        name: string;
-      };
-      job: {
-        title: string;
-      };
+    contracts: {
+      nodes: [
+        {
+          client: {
+            name: string;
+          };
+          contractRequests: {
+            project: {
+              title: string;
+            };
+          };
+          firm: {
+            name: string;
+          };
+          job: {
+            title: string;
+          };
+        }
+      ];
     };
   };
 }
@@ -65,22 +69,13 @@ function App() {
       const currentUserInfo = await fetchFlexhireData(currentUserQuery);
       setProfileInformation(currentUserInfo);
     };
-
-    getProfileData();
-  }, []);
-
-  useEffect(() => {
     const getJobData = async () => {
-      const jobInfo = await fetchFlexhireData(
-        jobQuery(JSON.stringify(profileInformation.data?.currentUser?.email))
-      );
+      const jobInfo = await fetchFlexhireData(jobQuery);
       setJobInformation(jobInfo);
     };
-
-    if (profileInformation.data?.currentUser?.email) {
-      getJobData();
-    }
-  }, [profileInformation]);
+    getProfileData();
+    getJobData();
+  }, []);
 
   return profileInformation.data?.currentUser ? (
     <div className="App">
@@ -118,12 +113,16 @@ function App() {
         </div>
       </header>
       {jobInformation.data && (
-        <div>
-          <h2>Jobs</h2>
-          <p>Title: {jobInformation.data.contract.job.title}</p>
-          <p>Company: {jobInformation.data.contract.firm.name}</p>
-          <p>Hiring Manager: {jobInformation.data.contract.client.name}</p>
-        </div>
+        jobInformation.data.contracts.nodes.map((job) => {
+          return (
+            <div>
+            <h2>Jobs</h2>
+            <p>Title: {job.job.title}</p>
+            <p>Company: {job.firm.name}</p>
+            <p>Hiring Manager: {job.client.name}</p>
+          </div>
+          )
+        })
       )}
     </div>
   ) : (

@@ -22,22 +22,24 @@ export const currentUserQuery = `{
     }
   }`;
 
-export const jobQuery = (email: string) => {
-  return (
-  `{contract(freelancerEmail: ${email}) {
-  client {
-    name
-  }
-  contractRequests {
-    project {
-      title
+export const jobQuery = 
+  `{
+    contracts {
+      nodes {
+        client {
+          name
+        }
+        contractRequests {
+          project {
+            title
+          }
+        }
+        firm {
+          name
+        }
+        job {
+          title
+        }
+      }
     }
-  }
-  firm {
-    name
-  }
-  job {
-    title
-  }
-}
-}`)}
+  }`
