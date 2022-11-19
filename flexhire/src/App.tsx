@@ -61,15 +61,26 @@ function App() {
   const [jobInformation, setJobInformation] = useState<Partial<IJobs>>({});
 
   useEffect(() => {
-    fetchFlexhireData(currentUserQuery).then((currentUserInfo) => {
-      return setProfileInformation(currentUserInfo);
-    });
-    fetchFlexhireData(
-      jobQuery(JSON.stringify(profileInformation.data?.currentUser?.email))
-    ).then((jobInfo) => {
-      return setJobInformation(jobInfo);
-    });
+    const getProfileData = async () => {
+      const currentUserInfo = await fetchFlexhireData(currentUserQuery);
+      setProfileInformation(currentUserInfo);
+    };
+
+    getProfileData();
   }, []);
+
+  useEffect(() => {
+    const getJobData = async () => {
+      const jobInfo = await fetchFlexhireData(
+        jobQuery(JSON.stringify(profileInformation.data?.currentUser?.email))
+      );
+      setJobInformation(jobInfo);
+    };
+
+    if (profileInformation.data?.currentUser?.email) {
+      getJobData();
+    }
+  }, [profileInformation]);
 
   return profileInformation.data?.currentUser ? (
     <div className="App">
