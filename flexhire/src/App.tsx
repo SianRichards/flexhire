@@ -77,7 +77,7 @@ function App() {
 
   useEffect(() => {
     if (profileInformation.data?.currentUser === null) {
-      setUserDoesNotExistMessage("Unable to find a user associated with with API key, please try another key.")
+      setUserDoesNotExistMessage("Unable to find a user associated with this API key. Please try another key.")
     }
     else setUserDoesNotExistMessage("")
   }, [profileInformation]);
