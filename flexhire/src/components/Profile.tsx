@@ -1,5 +1,5 @@
 import React from "react";
-import { ICurrentUser } from "../App";
+import { ICurrentUser } from "../Types";
 
 interface IProps {
   profileInformation: Partial<ICurrentUser>;

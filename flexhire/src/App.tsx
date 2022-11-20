@@ -5,61 +5,7 @@ import { currentUserQuery, jobQuery } from "./queryTypes";
 import ApiKeyForm from "./components/Form";
 import Profile from "./components/Profile";
 import Job from "./components/Job";
-
-export interface ICurrentUser {
-  data: {
-    currentUser?: {
-      name: string;
-      avatarUrl: string;
-      userSkills: [
-        {
-          experience: string;
-          skill: {
-            name: string;
-          };
-        }
-      ];
-      answers: [
-        {
-          question: {
-            title: string;
-            videoAnswer: {
-              video: {
-                url: string;
-              };
-            };
-          };
-        }
-      ];
-      email: string;
-    };
-  };
-}
-
-export interface IJobs {
-  data: {
-    contracts: {
-      nodes: [
-        {
-          client: {
-            name: string;
-          };
-          contractRequests: {
-            project: {
-              title: string;
-            };
-          };
-          firm: {
-            name: string;
-          };
-          job: {
-            title: string;
-          };
-        }
-      ];
-    };
-  };
-}
+import { ICurrentUser, IJobs } from "./Types";
 
 function App() {
   const [profileInformation, setProfileInformation] = useState<
