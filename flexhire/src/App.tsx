@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import fetchFlexhireData from "./apiCalls";
 import { currentUserQuery, jobQuery } from "./queryTypes";
+import ApiKeyForm from "./components/Form";
 
 interface ICurrentUser {
   data: {
@@ -63,8 +64,8 @@ function App() {
     Partial<ICurrentUser>
   >({});
   const [jobInformation, setJobInformation] = useState<Partial<IJobs>>({});
+  const [userDoesNotExistMessage, setUserDoesNotExistMessage] = useState("");
   const [formValue, setFormValue] = useState("");
-  const [userDoesNotExistMessage, setUserDoesNotExistMessage] = useState("")
 
   const getProfileData = async (apiKey: string) => {
     const currentUserInfo = await fetchFlexhireData(currentUserQuery, apiKey);
@@ -77,13 +78,14 @@ function App() {
 
   useEffect(() => {
     if (profileInformation.data?.currentUser === null) {
-      setUserDoesNotExistMessage("Unable to find a user associated with this API key. Please try another key.")
-    }
-    else setUserDoesNotExistMessage("")
+      setUserDoesNotExistMessage(
+        "Unable to find a user associated with this API key. Please try another key."
+      );
+    } else setUserDoesNotExistMessage("");
   }, [profileInformation]);
 
   const handleSubmit = (event: any) => {
-    event.preventDefault()
+    event.preventDefault();
     getProfileData(formValue);
     getJobData(formValue);
   };
@@ -91,17 +93,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <form onSubmit={handleSubmit}>
-          <label>
-            Enter Flexhire API Key here:
-            <input
-              type="text"
-              value={formValue}
-              onChange={(event) => setFormValue(event?.target.value)}
-            />
-          </label>
-          <input type="submit" />
-        </form>
+        <ApiKeyForm formValue={formValue} setFormValue={setFormValue} handleSubmit={handleSubmit}/>
         <p>{userDoesNotExistMessage}</p>
         {profileInformation.data?.currentUser && (
           <>
