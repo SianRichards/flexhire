@@ -3,8 +3,10 @@ import "./App.css";
 import fetchFlexhireData from "./apiCalls";
 import { currentUserQuery, jobQuery } from "./queryTypes";
 import ApiKeyForm from "./components/Form";
+import Profile from "./components/Profile";
+import Job from "./components/Job";
 
-interface ICurrentUser {
+export interface ICurrentUser {
   data: {
     currentUser?: {
       name: string;
@@ -34,7 +36,7 @@ interface ICurrentUser {
   };
 }
 
-interface IJobs {
+export interface IJobs {
   data: {
     contracts: {
       nodes: [
@@ -93,57 +95,26 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <ApiKeyForm formValue={formValue} setFormValue={setFormValue} handleSubmit={handleSubmit}/>
+        <ApiKeyForm
+          formValue={formValue}
+          setFormValue={setFormValue}
+          handleSubmit={handleSubmit}
+        />
         <p>{userDoesNotExistMessage}</p>
         {profileInformation.data?.currentUser && (
-          <>
-            <img
-              src={profileInformation.data.currentUser.avatarUrl}
-              className="App-logo"
-            />
-            <p>{profileInformation.data.currentUser.name}</p>
-            <div>
-              <h2>Skills</h2>
-              {profileInformation.data.currentUser.userSkills.map(
-                (userSkill) => {
-                  return (
-                    <>
-                      <div>{userSkill.skill.name}</div>
-                      <div>Level: {userSkill.experience}/5</div>
-                    </>
-                  );
-                }
-              )}
-            </div>
-            <div>
-              {profileInformation.data.currentUser.answers.map((answer) => {
-                return (
-                  <>
-                    <div>{answer.question.title}</div>
-                    <video controls>
-                      <source
-                        src={answer.question.videoAnswer.video.url}
-                        type="video/mp4"
-                      />
-                    </video>
-                  </>
-                );
-              })}
-            </div>
-          </>
+          <Profile profileInformation={profileInformation} />
         )}
       </header>
-      {jobInformation.data &&
-        jobInformation.data.contracts.nodes.map((job) => {
-          return (
-            <div>
-              <h2>Jobs</h2>
-              <p>Title: {job.job.title}</p>
-              <p>Company: {job.firm.name}</p>
-              <p>Hiring Manager: {job.client.name}</p>
-            </div>
-          );
-        })}
+      <div>
+        {jobInformation.data && (
+          <>
+            <h2>Jobs</h2>
+            {jobInformation.data.contracts.nodes.map((job) => {
+              return <Job job={job} />;
+            })}
+          </>
+        )}
+      </div>
     </div>
   );
 }
