@@ -1,6 +1,12 @@
 import React from "react";
 import { ICurrentUser } from "../Types";
 import styles from "./profile.module.scss";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Typography,
+} from "@mui/material";
 
 interface IProps {
   profileInformation: Partial<ICurrentUser>;
@@ -31,17 +37,22 @@ const Profile = (props: IProps) => {
         </div>
       </div>
       <div>
+      <h2>Answers</h2>
         {profileInformation.data?.currentUser?.answers.map((answer, index) => {
           return (
-            <div key={index}>
-              <div>{answer.question.title}</div>
-              <video controls>
-                <source
-                  src={answer.question.videoAnswer.video.url}
-                  type="video/mp4"
-                />
-              </video>
-            </div>
+            <Accordion className={styles.accordion} key={index}>
+              <AccordionSummary>
+                <Typography>{answer.question.title}</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <video controls>
+                  <source
+                    src={answer.question.videoAnswer.video.url}
+                    type="video/mp4"
+                  />
+                </video>
+              </AccordionDetails>
+            </Accordion>
           );
         })}
       </div>
