@@ -1,0 +1,12 @@
+.skillsContainer {
+    display: flex;
+    flex-direction: row;
+    margin: 15px;
+    .skill {
+        padding: 10px;
+        width: fit-content;
+        border-width: 2px;
+        border-style: solid;
+        border-color: white;
+    }
+}

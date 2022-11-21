@@ -1,5 +1,6 @@
 import React from "react";
 import { ICurrentUser } from "../Types";
+import styles from "./profile.module.scss";
 
 interface IProps {
   profileInformation: Partial<ICurrentUser>;
@@ -16,19 +17,23 @@ const Profile = (props: IProps) => {
       <p>{profileInformation.data?.currentUser?.name}</p>
       <div>
         <h2>Skills</h2>
-        {profileInformation.data?.currentUser?.userSkills.map((userSkill) => {
-          return (
-            <>
-              <div>{userSkill.skill.name}</div>
-              <div>Level: {userSkill.experience}/5</div>
-            </>
-          );
-        })}
+        <div className={styles.skillsContainer}>
+          {profileInformation.data?.currentUser?.userSkills.map(
+            (userSkill, index) => {
+              return (
+                <div className={styles.skill} key={index}>
+                  <div>{userSkill.skill.name}</div>
+                  <div>{userSkill.experience}/5</div>
+                </div>
+              );
+            }
+          )}
+        </div>
       </div>
       <div>
-        {profileInformation.data?.currentUser?.answers.map((answer) => {
+        {profileInformation.data?.currentUser?.answers.map((answer, index) => {
           return (
-            <>
+            <div key={index}>
               <div>{answer.question.title}</div>
               <video controls>
                 <source
@@ -36,7 +41,7 @@ const Profile = (props: IProps) => {
                   type="video/mp4"
                 />
               </video>
-            </>
+            </div>
           );
         })}
       </div>
