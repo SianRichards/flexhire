@@ -1,0 +1,16 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  align-items: center;
+  align-content: space-around;
+  input {
+    margin-left: 15px;
+  }
+  .submitButton {
+    width: 100px;
+    margin: 20px;
+  }
+}
+
+

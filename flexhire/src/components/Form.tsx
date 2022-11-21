@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./form.module.scss";
 
 interface IProps {
   formValue: string;
@@ -9,7 +10,7 @@ interface IProps {
 const ApiKeyForm = (props: IProps) => {
   const { formValue, setFormValue, handleSubmit } = props;
   return (
-    <form onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={handleSubmit}>
       <label>
         Enter Flexhire API Key here:
         <input
@@ -18,7 +19,7 @@ const ApiKeyForm = (props: IProps) => {
           onChange={(event) => setFormValue(event?.target.value)}
         />
       </label>
-      <input type="submit" />
+      <input className={styles.submitButton} type="submit" />
     </form>
   );
 };
