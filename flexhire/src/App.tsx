@@ -6,6 +6,7 @@ import ApiKeyForm from "./components/Form";
 import Profile from "./components/Profile";
 import Job from "./components/Job";
 import { ICurrentUser, IJobs } from "./Types";
+import Candidate from "./components/Candidate";
 
 function App() {
   const [profileInformation, setProfileInformation] = useState<
@@ -48,11 +49,9 @@ function App() {
         />
         <p>{userDoesNotExistMessage}</p>
         {profileInformation.data?.currentUser && (
-          <Profile profileInformation={profileInformation} />
+          <Candidate profileInformation={profileInformation} />
         )}
-      </header>
-      <div>
-        {jobInformation.data && (
+        {jobInformation.data && jobInformation.data.contracts.nodes.length > 0 && (
           <>
             <h2>Jobs</h2>
             {jobInformation.data.contracts.nodes.map((job) => {
@@ -60,7 +59,10 @@ function App() {
             })}
           </>
         )}
-      </div>
+        {profileInformation.data?.currentUser && (
+          <Profile profileInformation={profileInformation} />
+        )}
+      </header>
     </div>
   );
 }
