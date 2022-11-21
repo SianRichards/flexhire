@@ -31,9 +31,9 @@ const Profile = (props: IProps) => {
                 <div className={styles.skill} key={index}>
                   <div>{userSkill.skill.name}</div>
                   {parseInt(userSkill.experience) === 1 ? (
-                    <div>{userSkill.experience} year of experience</div>
+                    <p className={styles.skillLevel}>{userSkill.experience} year of experience</p>
                   ) : (
-                    <div>{userSkill.experience} years of experience</div>
+                    <p className={styles.skillLevel}>{userSkill.experience} years of experience</p>
                   )}
                 </div>
               );
