@@ -26,10 +26,15 @@ const Profile = (props: IProps) => {
         <div className={styles.skillsContainer}>
           {profileInformation.data?.currentUser?.userSkills.map(
             (userSkill, index) => {
+              console.log(userSkill.experience);
               return (
                 <div className={styles.skill} key={index}>
                   <div>{userSkill.skill.name}</div>
-                  <div>{userSkill.experience}/5</div>
+                  {parseInt(userSkill.experience) === 1 ? (
+                    <div>{userSkill.experience} year of experience</div>
+                  ) : (
+                    <div>{userSkill.experience} years of experience</div>
+                  )}
                 </div>
               );
             }
@@ -37,7 +42,7 @@ const Profile = (props: IProps) => {
         </div>
       </div>
       <div>
-      <h2>Answers</h2>
+        <h2>Answers</h2>
         {profileInformation.data?.currentUser?.answers.map((answer, index) => {
           return (
             <Accordion className={styles.accordion} key={index}>
